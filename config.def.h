@@ -5,7 +5,7 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "FreeMono:pixelsize=24=true:autohint=true";
+static char *font = "FreeMono:pixelsize=27=true:autohint=true";
 static int borderpx = 2;
 
 /*
