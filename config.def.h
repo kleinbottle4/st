@@ -5,7 +5,8 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "FreeMono:pixelsize=27=true:autohint=true";
+
+static char *font = "Inconsolata:pixelsize=36:autohint=true";
 static int borderpx = 2;
 
 /*
@@ -94,40 +95,40 @@ char *termname = "st-256color";
 unsigned int tabspaces = 8;
 
 /* bg opacity */
-float alpha = 0.8;
+float alpha = 0.7;
 
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
 
-        [0] =  "#333333", /* hard contrast: #1d2021 / soft contrast: #32302f */
-        [1] =  "#8c4665", /* red     */
-        [2] =  "#287373", /* green   */
-        [3] =  "#7c7c99", /* yellow  */
-        [4] =  "#395573", /* blue    */
-        [5] =  "#5e468c", /* magenta */
-        [6] =  "#31658c", /* cyan    */
-        [7] =  "#899ca1", /* white   */
-                        
-        [8]  = "#3d3d3d", /* black   */
-        [9]  = "#bf4d80", /* red     */
-        [10] = "#53a6a6", /* green   */
-        [11] = "#9e9ecb", /* yellow  */
-        [12] = "#477ab3", /* blue    */
-        [13] = "#7e62b3", /* magenta */
-        [14] = "#6096bf", /* cyan    */
-        [15] = "#c0c0c0", /* white   */
+	[0] =  "black",
+	[1] =  "red3",
+	[2] =  "green3",
+	[3] =  "yellow3",
+	[4] =  "DodgerBlue1",
+	[5] =  "magenta3",
+	[6] =  "cyan3",
+	[7] =  "gray90",
+
+	[8]  = "gray50",
+	[9]  = "red",
+	[10] = "green",
+	[11] = "yellow",
+	[12] = "SteelBlue1",
+	[13] = "magenta",
+	[14] = "cyan",
+	[15] = "white",
 
 	[255] = 0,
 
 	/* more colors can be added after 255 to use with DefaultXX */
 	/*bg*/
-	"#202020",
+	"black",
 	 /*fg*/
-	"#ffffff",
+	"white",
 	 /*cursor*/
-	"#999993",
+	"white",
 	/*reverse cursor*/
-	"#66666C",
+	"black",
 };
 
 
