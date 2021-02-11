@@ -6,8 +6,8 @@
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
 
-static char *font = "Inconsolata:pixelsize=36:autohint=true";
-static int borderpx = 2;
+static char *font = "Inconsolata:pixelsize=32:autohint=true";
+static int borderpx = 4;
 
 /*
  * What program is execed by st depends of these precedence rules:
@@ -205,6 +205,8 @@ static Shortcut shortcuts[] = {
 	{ XK_ANY_MOD,           XK_Print,       printsel,       {.i =  0} },
 	{ ControlMask,          XK_equal,       zoom,           {.f = +1} },
 	{ ControlMask,          XK_minus,       zoom,           {.f = -1} },
+	{ ControlMask,          XK_8,           zoom,           {.f = -5} },
+	{ ControlMask,          XK_9,           zoom,           {.f = +5} },
 	{ ControlMask,          XK_0,           zoomreset,      {.f =  0} },
 	{ TERMMOD,              XK_C,           clipcopy,       {.i =  0} },
 	{ TERMMOD,              XK_V,           clippaste,      {.i =  0} },
