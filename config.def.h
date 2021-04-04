@@ -6,7 +6,7 @@
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
 
-static char *font = "Inconsolata:pixelsize=32:autohint=true";
+static char *font = "Inconsolata:pixelsize=24:autohint=true";
 static int borderpx = 4;
 
 /*
@@ -99,14 +99,23 @@ float alpha = 1;
 
 /* Terminal colors (16 used in escape sequence) */
 static const char *palettes[][16] = {
-    {"black", "red3", "green3", "yellow3", "blue2", "magenta3", "cyan3", "gray90",
-    "gray50", "red", "green", "yellow", "#5c5cff", "magenta", "cyan", "white"},
-    {"#223", "#900", "#080", "#fe7", "#35e", "#fc5", "#18e", "#aaa",
-    "#666", "#f25", "#0b0", "#ff6", "#46f", "#d6a", "#6bf", "#ddd"},
-    {"#eaeaea", "#b7141f", "#457b24", "#fc7b08", "#134eb2", "#560088", "#0e717c", "#777777",
-    "#424242", "#e83b3f", "#7aba3a", "#fd8e09", "#54a4f3", "#aa4dbc", "#26bbd1", "#aaaaaa"},
-    {"#20242d", "#b04b57", "#87b379", "#e5c179", "#7d8fa4", "#a47996", "#85a7a5", "#b3b8c3",
-    "#000000", "#b04b57", "#87b379", "#e5c179", "#7d8fa4", "#a47996", "#85a7a5", "#ffffff"},
+
+	{"#223", "#900", "#4f4", "#fe7", "#35e", "#fc5", "#18e", "#aaa",
+		"#666", "#f25", "#2d3", "#ff6", "#4af", "#d6a", "#6bf",
+		"white"},
+
+	{"black", "red3", "green3", "yellow3", "blue2", "magenta3",
+		"cyan3", "gray90", "gray50", "red", "green", "yellow",
+		"#5c5cff", "magenta", "cyan", "white"},
+
+	{"#eaeaea", "#b7141f", "#457b24", "#fc7b08", "#134eb2", "#560088",
+		"#0e717c", "#777777", "#424242", "#e83b3f", "#7aba3a",
+		"#fd8e09", "#54a4f3", "#aa4dbc", "#26bbd1", "#aaaaaa"},
+
+	{"#20242d", "#b04b57", "#87b379", "#e5c179", "#7d8fa4", "#a47996",
+		"#85a7a5", "#b3b8c3", "#000000", "#b04b57", "#87b379",
+		"#e5c179", "#7d8fa4", "#a47996", "#85a7a5", "#ffffff"},
+
 };
 
 static const char **colorname;
@@ -118,10 +127,10 @@ static const char **colorname;
  * Default colors (colorname index)
  * foreground, background, cursor, reverse cursor
  */
-unsigned int defaultfg = 5;
+unsigned int defaultfg = 15;
 unsigned int defaultbg = 0;
-static unsigned int defaultcs = 5;
-static unsigned int defaultrcs = 5;
+static unsigned int defaultcs = 9;
+static unsigned int defaultrcs = 9;
 
 /*
  * https://invisible-island.net/xterm/ctlseqs/ctlseqs.html#h4-Functions-using-CSI-_-ordered-by-the-final-character-lparen-s-rparen:CSI-Ps-SP-q.1D81
@@ -170,11 +179,9 @@ static uint forcemousemod = ShiftMask;
  * Internal mouse shortcuts.
  * Beware that overloading Button1 will disable the selection.
  */
-const unsigned int mousescrollincrement = 1;
+
 static MouseShortcut mshortcuts[] = {
 	/* mask                 button   function        argument       release */
-	{ ShiftMask,            Button4, kscrollup,      {.i = mousescrollincrement} },
-	{ ShiftMask,            Button5, kscrolldown,    {.i = mousescrollincrement} },
 	{ XK_ANY_MOD,           Button2, selpaste,       {.i = 0},      1 },
 	{ ShiftMask,            Button4, ttysend,        {.s = "\033[5;2~"} },
 	{ XK_ANY_MOD,           Button4, ttysend,        {.s = "\031"} },
@@ -205,15 +212,15 @@ static Shortcut shortcuts[] = {
 	{ TERMMOD,              XK_Return,      newterm,        {.i =  0} },
 	{ ShiftMask,            XK_Page_Up,     kscrollup,      {.i = -1} },
 	{ ShiftMask,            XK_Page_Down,   kscrolldown,    {.i = -1} },
-	{ ControlMask|ShiftMask,     XK_1,          setpalette,     {.i =  0} },
-	{ ControlMask|ShiftMask,     XK_2,          setpalette,     {.i =  1} },
-	{ ControlMask|ShiftMask,     XK_3,          setpalette,     {.i =  2} },
-	{ ControlMask|ShiftMask,     XK_4,          setpalette,     {.i =  3} },
-	{ ControlMask|ShiftMask,     XK_5,          setpalette,     {.i =  4} },
-	{ ControlMask|ShiftMask,     XK_6,          setpalette,     {.i =  5} },
-	{ ControlMask|ShiftMask,     XK_7,          setpalette,     {.i =  6} },
-	{ ControlMask|ShiftMask,     XK_8,          setpalette,     {.i =  7} },
-	{ ControlMask|ShiftMask,     XK_9,          setpalette,     {.i =  8} },
+	{ ControlMask,     XK_1,          setpalette,     {.i =  0} },
+	{ ControlMask,     XK_2,          setpalette,     {.i =  1} },
+	{ ControlMask,     XK_3,          setpalette,     {.i =  2} },
+	{ ControlMask,     XK_4,          setpalette,     {.i =  3} },
+	{ ControlMask,     XK_5,          setpalette,     {.i =  4} },
+	{ ControlMask,     XK_6,          setpalette,     {.i =  5} },
+	{ ControlMask,     XK_7,          setpalette,     {.i =  6} },
+	{ ControlMask,     XK_8,          setpalette,     {.i =  7} },
+	{ ControlMask,     XK_9,          setpalette,     {.i =  8} },
 };
 
 /*

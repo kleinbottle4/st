@@ -42,10 +42,10 @@ dist: clean
 
 install: st
 	mkdir -p $(DESTDIR)$(PREFIX)/bin
-	cp -f st $(DESTDIR)$(PREFIX)/bin/st3
-	chmod 755 $(DESTDIR)$(PREFIX)/bin/st3
+	cp -f st $(DESTDIR)$(PREFIX)/bin/st
+	chmod 755 $(DESTDIR)$(PREFIX)/bin/st
 
 uninstall:
-	rm -f $(DESTDIR)$(PREFIX)/bin/st3
+	rm -f $(DESTDIR)$(PREFIX)/bin/st
 
 .PHONY: all options clean dist install uninstall
