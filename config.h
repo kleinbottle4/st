@@ -6,8 +6,13 @@
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html   
  */
 
-static char *font = "monospace:pixelsize=25:autohint=true";
-static int borderpx = 0;
+static char *font = "monospace:pixelsize=31:autohint=true:antialias=true";
+static int borderpx = 4;
+
+/* disable bold, italic and roman fonts globally */
+int disablebold = 1;
+int disableitalic = 0;
+int disableroman = 0;
 
 /*
  * What program is execed by st depends of these precedence rules:
@@ -99,14 +104,22 @@ float alpha = 0.8;
 
 /* Terminal colors (16 used in escape sequence) */
 static const char *palettes[][16] = {
+/* spacedust */
+{"#0a1e24", "#e35b00", "#5cab96", "#e3cd7b", "#0f548b", "#e35b00", "#ecf0c1", "#f0f1ce", "#684c31", "#ff8a3a", "#aecab8", "#ffc878", "#67a0ce", "#ff8a3a", "#83a7b4", "#fefff1"},
 /* xterm */
 {"black", "red3", "green3", "yellow3", "blue2", "magenta3", "cyan3", "gray90",
 "gray50", "red", "green", "yellow", "#5c5cff", "magenta", "cyan", "white", },
-/* xterm */
+/* xterm light */
 {"gray90", "red3", "green3", "yellow3", "blue2", "magenta3", "cyan3", "black",
 "white", "red", "green", "yellow", "#5c5cff", "magenta", "cyan", "gray50", },
+/* monochrome dark */
+{"gray15", "gray80", "gray80", "gray80", "gray80", "gray80", "gray80", "gray80",
+ "gray15", "gray80", "gray80", "gray80", "gray80", "gray80", "gray80", "gray80", },
+/* monochrome light */
+{"gray60", "black", "black", "black", "black", "black", "black", "black",
+ "gray60", "black", "black", "black", "black", "black", "black", "black", },
 /* chalk */
-{"#2d2d2d", "#F58E8E", "#A9D3AB", "#FED37E", "#7AABD4", "#D6ADD5", "#79D4D5", "#D4D4D4",
+{"#202020", "#F58E8E", "#A9D3AB", "#FED37E", "#7AABD4", "#D6ADD5", "#79D4D5", "#D4D4D4",
 "#646464", "#F58E8E", "#A9D3AB", "#FED37E", "#7AABD4", "#D6ADD5", "#79D4D5", "#D4D4D4",},
 /* gruvbox */
 { "#282828", "#cc241d", "#98971a", "#d79921", "#458588", "#b16286", "#689d6a", "#a89984",
@@ -194,21 +207,24 @@ static Shortcut shortcuts[] = {
 	{ ControlMask,          XK_Print,       toggleprinter,  {.i =  0} },
 	{ ShiftMask,            XK_Print,       printscreen,    {.i =  0} },
 	{ XK_ANY_MOD,           XK_Print,       printsel,       {.i =  0} },
-	{ ControlMask,          XK_plus,        zoom,           {.f = +1} },
-	{ ControlMask,          XK_minus,       zoom,           {.f = -1} },
-	{ ControlMask,          XK_equal,       zoomreset,      {.f =  0} },
-	{ TERMMOD,              XK_C,           clipcopy,       {.i =  0} },
+	{ ControlMask,  /* 0 */ XK_asterisk,    zoom,           {.f = -1} },
+	{ ControlMask,  /* 2 */ XK_parenright,  zoom,           {.f = +1} },
+	{ ControlMask,  /* 4 */ XK_plus,        zoom,           {.f = -10}},
+	{ ControlMask,  /* 6 */ XK_bracketright,zoom,           {.f = +10}},
+	{ ControlMask,  /* 8 */ XK_exclam,      zoomreset,      {.f =  0} },
+	{ TERMMOD,              XK_Y,           clipcopy,       {.i =  0} },
 	{ TERMMOD,              XK_V,           clippaste,      {.i =  0} },
-	{ TERMMOD,              XK_Y,           selpaste,       {.i =  0} },
+	{ TERMMOD,              XK_P,           selpaste,       {.i =  0} },
 	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
 	{ TERMMOD,              XK_Return,      newterm,        {.i =  0} },
 	{ ShiftMask,            XK_Page_Up,     kscrollup,      {.i = -1} },
 	{ ShiftMask,            XK_Page_Down,   kscrolldown,    {.i = -1} },
-	{ ControlMask,          XK_asterisk,    setpalette,     {.i =  0} },
-	{ ControlMask,          XK_parenleft,   setpalette,     {.i =  1} },
-	{ ControlMask,          XK_parenright,  setpalette,     {.i =  2} },
-	{ ControlMask,          XK_braceright,  setpalette,     {.i =  3} },
+	{ ControlMask,  /* 1 */ XK_parenleft,   setpalette,     {.i =  0} },
+	{ ControlMask,  /* 3 */ XK_braceright,  setpalette,     {.i =  1} },
+	{ ControlMask,  /* 5 */ XK_braceleft,   setpalette,     {.i =  2} },
+	{ ControlMask,  /* 7 */ XK_bracketleft, setpalette,     {.i =  3} },
+	{ ControlMask,  /* & */ XK_ampersand,   setpalette,     {.i =  4} },
 };
 
 /*
